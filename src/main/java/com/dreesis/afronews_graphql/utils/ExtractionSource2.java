@@ -405,7 +405,7 @@ public class ExtractionSource2 {
         }
         return liste;
     }
-
+    //Fini mais pas pris en charge
     public static List<Article> getMosaicGuinee(){
         String url = "https://mosaiqueguinee.com/";
         String url1 = "mosaiqueguinee.com";
@@ -475,7 +475,7 @@ public class ExtractionSource2 {
         }
         return liste;
     }
-
+    //Pas fini
     public static List<Article> getGuineeNews(){
         String url = "https://guineenews.org/";
         String url1 = "guineenews.org";
@@ -500,4 +500,134 @@ public class ExtractionSource2 {
         }
         return liste;
     }
+
+    public static List<Article> getAfrikPresse(){
+        String url = "https://afrikipresse.fr/";
+        String url1 = "afrikipresse.fr";
+        List<Article> liste = new ArrayList<>();
+        try {
+            Document doc = Jsoup.connect(url).get();
+            String title = doc.title();
+            //System.out.println(title);
+            Elements docs = doc.select("div.jeg_main");
+            Elements main = docs.select("div.jeg_container");
+            Elements block = main.select("div.bialty-container");
+            Elements vc = block.select("div.vc_row");
+            Elements jeg_wrap = vc.select("div.wpb_column");
+            for(Element jeg : jeg_wrap){
+                Elements post = jeg.select("div.jeg_postblock_1");
+                for(Element cat : post){
+                    String mod = cat.select("div.jeg_block_heading").select("h3.jeg_block_title").text();
+                    //System.out.println(mod);
+                }
+                for(Element news : post){
+
+                    Elements arts = news.select("div.jeg_block_container").select("div.jeg_posts");
+                    for(Element posts: arts){
+                        Elements thumb = posts.select("article.jeg_post");
+                        for(Element img : thumb){
+                            Article article = new Article();
+                            Source source = new Source();
+                            source.setNom("AfrikiPresse");
+                            source.setPays("Afrique");
+                            source.setTitre(title);
+                            source.setUrlSource(url1);
+                            source.setUrlLogo("https://afrikipresse.fr/wp-content/uploads/2019/07/logo-afrikipresse.png");
+                            source.setContact("+33 601264678");
+                            article.setSource(source);
+                            String urlArt = img.select("a").attr("href");
+                            article.setUrlArticle(urlArt);
+                            //System.out.println(urlArt);
+                            Elements imgArt = img.select("a").select("div.thumbnail-container");
+                            for(Element image :imgArt){
+                                String imge = image.select("div.bialty-container").select("img.wp-post-image").attr("src");
+                                //System.out.println(imge);
+                                article.setUrlImage(imge);
+                            }
+                            String categorie = img.select("div.jeg_post_category").select("span").text();
+                            //System.out.println(categorie);
+                            Categorie categorie1 = new Categorie();
+                            categorie1.setNom(categorie);
+                            article.setCategorie(categorie1);
+                            Elements content = img.select("div.jeg_postblock_content");
+                            for(Element cont :content){
+                                String titres = cont.select("h3.jeg_post_title").text();
+                                //System.out.println(titres);
+                                article.setTitre(titres);
+                                String desc = cont.select("div.jeg_post_excerpt").select("p").text();
+                                //System.out.println(desc);
+                                article.setDescription(desc);
+                                article.setCreated(LocalDateTime.now());
+
+                            }
+                            liste.add(article);
+                        }
+
+                    }
+
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return liste;
+    }
+    //Impossible de run
+    public static List<Article> getLeQuotidien(){
+        String url = "https://lequotidien.sn/";
+        String url1 = "lequotidien.sn";
+        List<Article> liste = new ArrayList<>();
+        try {
+            Document doc = Jsoup.connect(url).get();
+            String title = doc.title();
+            //System.out.println(title);
+            Elements main = doc.select("main#main");
+            Elements docs = main.select("section#latest-posts");
+            Elements block = docs.select("div.row");
+            for(Element vc : block)
+            {
+                Elements news = vc.select("article.post");
+                for(Element post : news){
+                    String urlArt = post.select("figure.entry-image").select("a").attr("href");
+                    //System.out.println(urlArt);
+                    Elements img = post.select("figure.entry-image").select("a");
+                    for(Element image : img){
+                        String imageurl = image.select("img.wp-post-image").attr("src");
+                        System.out.println(imageurl);
+                    }
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return liste;
+    }
+    //Pas fini
+    public static List<Article> getSenePlus(){
+        String url = "https://www.seneplus.com/";
+        String url1 = "seneplus.com";
+        List<Article> liste = new ArrayList<>();
+        try {
+            Document doc = Jsoup.connect(url).get();
+            String title = doc.title();
+            //System.out.println(title);
+            Elements main = doc.select("div#content");
+            Elements docs = main.select("div.section");
+            //Elements block = docs.select("div.col-sm-8");
+            Elements col = docs.select("div.home-column-center");
+            for(Element home : col){
+                Elements wrap = home.select("div.story-wrapper");
+                for(Element story : wrap){
+                    Elements tits = story.select("div.center-story-wrapper");
+                    String titre = tits.select("h2").text();
+                    //Element bloc = story.select("h2");
+                    System.out.println(titre);
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return liste;
+    }
+
 }
