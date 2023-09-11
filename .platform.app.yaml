@@ -7,7 +7,7 @@
 name: afronews
 
 # The runtime the application uses.
-type: "java:17"
+type: "java:11"
 
 disk: 1024
 
