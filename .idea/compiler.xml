@@ -10,9 +10,6 @@
         <module name="afronews_graphql" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="afronews_graphql" target="17" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

@@ -63,7 +63,7 @@ public class ArticleService  {
             }else {
                 Optional<Categorie> categorie = categorieRepo.findById(20L);
                 //categorie1 = categorie.get();
-                articles.get(i).setCategorie(categorie.get());
+                articles.get(i).setCategorie(categorie.orElse(null));
             }
             //System.err.println(articles.get(i));
             Article article2 = articleRepo.findByTitre(articles.get(i).getTitre());
@@ -71,7 +71,7 @@ public class ArticleService  {
                 articles.get(i).setCategorie(new Categorie(categorie1.getId()));
             }else{
                 Optional<Categorie> categorie = categorieRepo.findById(20L);
-                articles.get(i).setCategorie(categorie.get());
+                articles.get(i).setCategorie(categorie.orElse(null));
             }
             if (article2 == null){
                 Article article1 = this.articleRepo.saveAndFlush(articles.get(i));

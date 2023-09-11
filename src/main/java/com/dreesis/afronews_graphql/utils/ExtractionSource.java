@@ -72,7 +72,7 @@ public class ExtractionSource {
         }
         return liste;
     }
-
+    //Revu Etat Bon
     public static List<Article> getJournalDeBrazza() {
         //JournalDeBrazza 12/01/2022
         String url = "https://www.journaldebrazza.com/";
@@ -142,9 +142,12 @@ public class ExtractionSource {
             log.error("Erreur dans Journal De brazza", e);
             e.printStackTrace();
         }
+        // Fonctionne correctement 14/08/2023
+        // liste.forEach(System.out::println);
+
         return liste;
     }
-
+    //Revu Etat Bon
     public static List<Article> getGabonReview(){
         //Gabon Review Extraction categorieName categorieUrl titre url_article url_img description time
         String url = "https://www.gabonreview.com/";
@@ -222,9 +225,10 @@ public class ExtractionSource {
         }catch (Exception e){
             e.printStackTrace();
         }
+        // Fonctionne correctement 18/08/2023
         return allArticle;
     }
-
+    //Non modifié Etat Non-fonctionnel
     public static List<Article> getLinfodrome2() throws Exception{
         String url ="https://www.linfodrome.com";
         String url1 ="linfodrome.com";
@@ -233,12 +237,12 @@ public class ExtractionSource {
         try {
             Document dc = Jsoup.connect(url).get();//.get();
             String titreweb = dc.title();
-            Elements bod = dc.select("div.mod-67");
-            Elements body = bod.select("div.bottom");
-            Elements bottom = body.select("div.uk-child-width-1-1");
+            Elements bod = dc.select("div.linfodromeSec");
+            Elements body = bod.select("div.linfodromeSecMain");
+            Elements bottom = body.select("div.linfodromeSecMain");
 
             for(Element bot : bottom){
-                Elements contnt = bot.select("div.content");
+                Elements contnt = bot.select("div.actualitesrow");
                 for(Element content : contnt){
                     Article article = new Article();
                     Source source = new Source();
@@ -296,6 +300,7 @@ public class ExtractionSource {
         }
         return allArticle;
     }
+    //Non modifié Etat Non-fonctionnel
     public static List<Article> getTelquel(){
         //lequel.ma 22/01/2022
         String url = "https://telquel.ma/";
@@ -369,6 +374,7 @@ public class ExtractionSource {
         }
         return articleList;
     }
+    //Modifié le 21/08/2023 Etat bon
     public static List<Article> getScidev(){
         String url = "https://www.scidev.net/afrique-sub-saharienne/";
         String url1 = "scidev.net";
@@ -428,6 +434,7 @@ public class ExtractionSource {
         }
         return articleList;
     }
+    //Non modifié Etat Non-fonctionnel
     public static List<Article> getMedia24(){
         //https://medias24.com/ 21/01/2022
         String url = "https://medias24.com/";
@@ -488,6 +495,7 @@ public class ExtractionSource {
         }
         return articleList;
     }
+    //Non modifié Etat Non-fonctionnel
     public static List<Article> getAfrikfoot(){
         //Afrik-foot 21/01/2022
         String url = "https://www.afrik-foot.com/";
@@ -564,6 +572,61 @@ public class ExtractionSource {
         }
         return liste;
     }
+    // A revoir Etat Non-fonctionnel
+    public static List<Article> getAfrikFoot2(){
+        String url = "https://www.afrik-foot.com/";
+        String url2 = "afrik-foot.com";
+        List<Article> liste = new ArrayList<>();
+        try{
+            Document doc = Jsoup.connect(url).get();
+            String title = doc.title();
+            //System.out.println(title);
+            Elements docs = doc.select("div#main-container");
+            Elements main = docs.select("main.site-main");
+            Elements content = main.select("article.page");
+            Elements conts = content.select("div.entry-content");
+            Elements custom = conts.select("div.display-posts");
+            for(Element block : custom){
+                Elements lien = block.select("a.block-post");
+                for(Element liens : lien){
+                    String url_lien = liens.attr("href");
+                    System.out.println(url_lien);
+                }
+            }
+            //System.out.println(main);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return liste;
+    }
+    //A finir 21/08/2023 Etat Non-fonctionnel
+    public static List<Article> getAfriqueSports(){
+        String url = "https://www.afriquesports.net/";
+        String url2 = "afriquesports.com";
+        List<Article> listes = new ArrayList<>();
+        try{
+            Document doc = Jsoup.connect(url).get();
+            String title = doc.title();
+            //System.out.println(title);
+            Elements docs = doc.select("div#content");
+            Elements main = docs.select("div.container");
+            Elements content = main.select("div#primary");
+            Elements conts = content.select("main#main");
+            Elements custom = conts.select("div.post-wrap");
+            for(Element block : custom){
+                Elements lien = block.select("figure.post-img-wrap");
+                for(Element liens : lien){
+                    String url_lien = liens.select("a.post-img").attr("href");
+                    System.out.println(url_lien);
+                }
+            }
+            //System.out.println(main);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return listes;
+    }
+    //Revu à jour 21/08/2023 Etat Bon
     public static List<Article> getAfriquelatribuneEconomie(){
         String url = "https://afrique.latribune.fr/economie";
         String url1 = "afrique.latribune.fr";
@@ -625,6 +688,7 @@ public class ExtractionSource {
         }
         return liste;
     }
+    //Mis à jour 21/08/2023 Etat Bon
     public static List<Article> getAfriquelatribunePolitique(){
         String url = "https://afrique.latribune.fr/politique";
         String url1 = "afrique.latribune.fr";
@@ -686,6 +750,7 @@ public class ExtractionSource {
         }
         return liste;
     }
+    //Mis à jour 21/08/2023 Etat Bon
     public static List<Article> getAfriquelatribuneTech(){
         String url = "https://afrique.latribune.fr/africa-tech";
         String urlspe = "afrique.latribune.fr";
@@ -747,6 +812,7 @@ public class ExtractionSource {
         }
         return liste;
     }
+    //Mis à jour 21/08/2023 Etat Bon
     public static List<Article> getAfriquelatribuneTechTelecoms(){
         String url2 = "https://afrique.latribune.fr/africa-tech/telecoms";
         String urlspe = "afrique.latribune.fr";
@@ -808,13 +874,14 @@ public class ExtractionSource {
         }
         return liste;
     }
+    // A revoir 21/08/2023
     public static List<Article> getAfriqueitnews(){
         String url = "https://afriqueitnews.com/";
         String url1 = "afriqueitnews.com";
 
         List<Article> liste = new ArrayList<>();
         try{
-            Document doc = Jsoup.connect(url).get();
+            Document doc = Jsoup.connect(url).data().get();
             String title = doc.title();
             //System.out.println(title);
             Elements docs = doc.select("div.elementor-widget-jnews_block_5_elementor");
@@ -881,6 +948,7 @@ public class ExtractionSource {
         }
         return liste;
     }
+    //Revu 21/08/2023 Etat Bon
     public static List<Article> getAfrimag(){
         //Afrimag 11/01/2022
         String url = "https://afrimag.net/rubrique/economie-et-entreprise/";
@@ -953,6 +1021,7 @@ public class ExtractionSource {
         }
         return liste;
     }
+    //Revu 21/08/2023 Etat Bon
     public static List<Article> getDakarActu(){
         //DakarActu 11/01/2022
         String url = "https://www.dakaractu.com";
@@ -1011,6 +1080,7 @@ public class ExtractionSource {
         }
         return liste;
     }
+    //Revu 21/08/2023 Etat Non fonctionnel
     public static List<Article> getAps() {
         //APS 11/01/2022
         String url = "http://aps.sn/";
@@ -1072,6 +1142,7 @@ public class ExtractionSource {
         }
         return liste;
     }
+    //Revu 21/08/2023 Etat Bon
     public static List<Article> getAdiacCongo(){
         //Adiac-Congo 12/01/2022
 
@@ -1141,7 +1212,7 @@ public class ExtractionSource {
         }
         return liste;
     }
-
+    //Revu 21/08/2023 Etat Bon
     public static List<Article> getKoaciExtract() throws RuntimeException{
         //Koaci Afrique
         String url ="https://www.koaci.com/pays/afrique";
@@ -1219,7 +1290,7 @@ public class ExtractionSource {
         }
         return allArticle;
     }
-
+    //Revu 21/08/2023 Etat Bon
     public static List<Article> getLesEchosExtraction() throws RuntimeException{
         //EXtraction du site lesechos-congobrazza
         String url = "https://lesechos-congobrazza.com";
@@ -1302,7 +1373,7 @@ public class ExtractionSource {
         }
         return articlesList;
     }
-
+    //Revu 21/08/2023 Etat Bon
     public static List<Article> getJeuneAfrique(){
         String url = "https://www.jeuneafrique.com/";
         String url1 = "jeuneafrique.com";

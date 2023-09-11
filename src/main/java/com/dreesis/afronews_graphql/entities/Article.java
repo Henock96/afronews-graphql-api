@@ -21,6 +21,7 @@ public class Article implements Serializable {
 
     @Column(unique = true, columnDefinition = "TEXT")
     private String titre;
+    @Column(columnDefinition = "TEXT")
     private String description;
     @Column(name = "url_image")
     private String urlImage;

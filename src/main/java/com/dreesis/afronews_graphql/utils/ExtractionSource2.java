@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExtractionSource2 {
+    //Etat Non fonctionnel 21/08/2023
     public static List<Article> getSeneweb() {
         String url = "https://www.seneweb.com";
         String url1 = "seneweb.com";
@@ -83,13 +84,13 @@ public class ExtractionSource2 {
         }
         return liste;
     }
-
+    // Etat Non fonctionnel 21/08/2023
     public static List<Article> getGalsen221(){
         String url = "https://galsen221.com/";
         String url1 = "galsen221.com";
         List<Article> liste = new ArrayList<>();
         try {
-            Document doc = Jsoup.connect(url).get();
+            Document doc = Jsoup.connect(url).timeout(100 * 1000).get();
             String title = doc.title();
             //System.out.println(title);
             Elements docs = doc.select("div.zox-widget-bg");
@@ -146,6 +147,7 @@ public class ExtractionSource2 {
     }
 
     //RDC
+    // Etat Non fonctionnel 21/08/2023
     public static List<Article> getActualiteCD(){
         String url = "https://actualite.cd";
         String url1 = "actualite.cd";
@@ -210,7 +212,7 @@ public class ExtractionSource2 {
         }
         return liste;
     }
-
+    // Etat Bon 21/08/2023
     public static List<Article> get7sur7CD(){
         String url = "https://7sur7.cd";
         String url1 = "7sur7.cd";
@@ -273,7 +275,7 @@ public class ExtractionSource2 {
         }
         return liste;
     }
-
+    // Etat Bon 21/08/2023
     public static List<Article> getRadioOkapi(){
         String url = "https://www.radiookapi.net/actualite";
         String url1 = "radiookapi.net";
@@ -341,7 +343,7 @@ public class ExtractionSource2 {
         }
         return liste;
     }
-
+    // Etat Non fonctionnel 21/08/2023
     public static List<Article> getPolitico(){
         String url = "https://www.politico.cd/";
         String url1 = "politico.cd";
@@ -406,6 +408,7 @@ public class ExtractionSource2 {
         return liste;
     }
     //Fini mais pas pris en charge
+    //Etat Bon 21/08/2023
     public static List<Article> getMosaicGuinee(){
         String url = "https://mosaiqueguinee.com/";
         String url1 = "mosaiqueguinee.com";
@@ -475,7 +478,7 @@ public class ExtractionSource2 {
         }
         return liste;
     }
-    //Pas fini
+    //Pas fini // Etat Non fonctionnel 21/08/2023
     public static List<Article> getGuineeNews(){
         String url = "https://guineenews.org/";
         String url1 = "guineenews.org";
@@ -500,7 +503,7 @@ public class ExtractionSource2 {
         }
         return liste;
     }
-
+    // Etat Non fonctionnel 21/08/2023
     public static List<Article> getAfrikPresse(){
         String url = "https://afrikipresse.fr/";
         String url1 = "afrikipresse.fr";
@@ -622,6 +625,256 @@ public class ExtractionSource2 {
                     String titre = tits.select("h2").text();
                     //Element bloc = story.select("h2");
                     System.out.println(titre);
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return liste;
+    }
+
+    //16/08/2022 Pas fini
+    public static List<Article> getAfriqueSur7(){
+        String url = "https://www.afrique-sur7.ci";
+        String url1 = "afrique-sur7.ci";
+        List<Article> liste = new ArrayList<>();
+        try {
+            Document doc = Jsoup.connect(url).get();
+            String title = doc.title();
+            //System.out.println(title);
+            Elements main = doc.select("div#bloc_accueil");
+            Elements docs = main.select("div.col_gauche");
+            //Elements block = docs.select("div.col-sm-8");
+            Elements col = docs.select("div#others_blocks");
+
+            for(Element bloc : col){
+                Elements cat = bloc.select("span.h2");
+
+                for(Element cates : cat){
+                    String categorie = cates.text();
+                    Article article = new Article();
+                    Categorie categorie1 = new Categorie();
+                    categorie1.setNom(categorie);
+                    article.setCategorie(categorie1);
+                    //System.out.println(categorie);
+                }
+                Elements wrap = bloc.select("div.row");
+                for(Element row : wrap){
+                    Article article = new Article();
+                    Elements arts = row.select("div.col-md-6");
+                    for(Element img :arts){
+                        String urlArt = img.select("a.thumb-img").attr("href");
+                        article.setUrlArticle(url+urlArt);
+                        Elements imgurl = img.select("a.thumb-img");
+                        for(Element image : imgurl){
+                            String imgUrl = image.select("img.article-image").attr("data-src");
+                            article.setUrlImage(imgUrl);
+                            //System.out.println(imgUrl);
+                        }
+                        //System.out.println(urlArt);
+                    }
+                    Elements dtime = row.select("div.col-md-6");
+                    for(Element time : arts){
+                        String dtimes = time.select("small").text();
+                        article.setDatePublication(dtimes);
+                        //System.out.println(dtimes);
+                    }
+                    for(Element titre : arts){
+                        String titres = titre.select("h3").text();
+                        article.setTitre(titres);
+                        //System.out.println(titres);
+                    }
+                    for(Element desc : arts){
+                        String description = desc.select("p").text();
+                        article.setDescription(description);
+                        liste.add(article);
+                        //System.out.println(description);
+                    }
+
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return liste;
+    }
+
+    //16/08/2022 Pas fini
+    public static List<Article> getSportNewsAfrica(){
+
+        String url = "https://sportnewsafrica.com/";
+        String url1 = "sportnewsafrica.com";
+        List<Article> liste = new ArrayList<>();
+        try {
+            Document doc = Jsoup.connect(url).get();
+            String title = doc.title();
+            //System.out.println(title);
+            Elements main = doc.select("div#inner_content-6-38299");
+            Elements docs = main.select("div#new_columns-3-38474");
+            //Elements block = docs.select("div.col-sm-8");
+            Elements cols= docs.select("div#div_block-4-38474");
+            Elements col = cols.select("div.ct-code-block");
+            Elements row = col.select("div.details-article");
+            for(Element rows : row){
+                Elements sous = rows.select("div.sous-division");
+                for(Element wrap : sous){
+                    Article article = new Article();
+                    String urlArt = wrap.select("div.col-6").select("a").attr("href");
+                    //System.out.println(urlArt);
+                    article.setUrlArticle(urlArt);
+                    Elements wraps = wrap.select("div.col-6");
+                    for(Element img : wraps){
+                        Elements image = img.select("a");
+                        //System.out.println(image);
+                        for(Element images : image){
+                            String imgs = images.select("img").attr("src");
+                            article.setUrlImage(imgs);
+                            //System.out.println(imgs);
+                        }
+                        String titre = img.select("h3").text();
+                        //System.out.println(titre);
+                        article.setTitre(titre);
+                        Elements dtime = img.select("span.entry-date");
+                        for(Element dtimes : dtime){
+                            String datimes = dtimes.text();
+                            String datimesformat =dtimes.attr("datetime");
+                            article.setDatePublication(datimes);
+                            article.setDatePublicationFormat(datimesformat);
+
+
+                            //System.out.println(datimesformat);
+                        }
+
+                    }
+                    liste.add(article);
+
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return liste;
+    }
+
+    //16/08/2022
+    public static List<Article> getAfrica24(){
+        String url = "https://africa24tv.com/";
+        String url1 = "africa24tv.com";
+        List<Article> liste = new ArrayList<>();
+        try {
+            Document doc = Jsoup.connect(url).get();
+            String title = doc.title();
+            //System.out.println(title);
+            Elements main = doc.select("div#tiepost-1016-section-3871");
+            Elements docs = main.select("div.container");
+            //Elements block = docs.select("div.col-sm-8");
+            Elements cols = docs.select("div.main-content");
+            Elements col = cols.select("div.container-wrapper");
+            Elements row = col.select("div.mag-box-container");
+            Elements post = row.select("ul.posts-items");
+            for(Element posts : post){
+                Elements items = posts.select("li.post-item");
+                for(Element item : items){
+                    Article article = new Article();
+                    Source source = new Source();
+                    source.setNom("Africa24");
+                    source.setPays("Afrique");
+                    source.setTitre(title);
+                    source.setUrlSource(url1);
+                    source.setUrlLogo("https://africa24tv.com/wp-content/uploads/2021/05/logo_a24-1.png");
+                    source.setUrlContact("web.facebook.com/africa24tv");
+                    source.setUrlContactFull("https://web.facebook.com/africa24tv?_rdc=1&_rdr");
+                    article.setSource(source);
+                    String lien = item.select("a.post-thumb").attr("href");
+                    article.setUrlArticle(lien);
+                    //System.out.println(lien);
+                    Elements liens = item.select("a.post-thumb");
+                    for(Element ls : liens){
+                        String img = ls.select("img.wp-post-image").attr("src");
+                        //System.out.println(img);
+                        article.setUrlImage(img);
+                        String cat = ls.select("span.post-cat-wrap").text();
+                        Categorie categorie = new Categorie();
+                        categorie.setNom(cat);
+                        article.setCategorie(categorie);
+                        //System.out.println(cat);
+                    }
+                    Elements details = item.select("div.post-details");
+                    for(Element detail : details){
+                        Elements auth = detail.select("div.post-meta");
+                        for(Element auths : auth){
+                            String autheur = auths.select("span.author-meta").text();
+                            //System.out.println(autheur);
+                            article.setAuteur(autheur);
+                            String dtime = auths.select("span.date").text();
+                            //System.out.println(dtime);
+                            article.setDatePublication(dtime);
+                        }
+                        String titres = detail.select("h2.post-title").text();
+                        article.setTitre(titres);
+                        //System.out.println(titres);
+                        String desc = detail.select("p.post-excerpt").text();
+                        //System.out.println(desc);
+                        article.setDescription(desc);
+                        article.setCreated(LocalDateTime.now());
+                        liste.add(article);
+                    }
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return liste;
+    }
+    //17/08/2022 01:01
+    public static List<Article> getVoaAfrique(){
+        String url = "https://www.voaafrique.com/afrique";
+        String url2 = "https://www.voaafrique.com";
+        String url1 = "voaafrique.com";
+        List<Article> liste = new ArrayList<>();
+        try {
+            Document doc = Jsoup.connect(url).get();
+            String title = doc.title();
+            //System.out.println(title);
+            Elements main = doc.select("div#page");
+            Elements docs = main.select("div#content");
+            //Elements block = docs.select("div.col-sm-8");
+            Elements cols = docs.select("div#wrowblock-24376_9");
+            Elements col = cols.select("div.media-block-wrap");
+            Elements row = col.select("ul");
+            for(Element rows : row){
+                Elements ls = rows.select("li.col-xs-12");
+                for(Element bloc : ls){
+                    Article article = new Article();
+                    Source source = new Source();
+                    source.setNom("VOA Afrique");
+                    source.setPays("Afrique");
+                    source.setTitre(title);
+                    source.setUrlSource(url1);
+                    source.setUrlLogo("https://www.voaafrique.com/Content/responsive/VOA/fr/img/logo-print_color.png");
+                    source.setUrlContactFull("https://web.facebook.com/VOAAfrique?_rdc=1&_rdr");
+                    source.setUrlContact("web.facebook.com/VOAAfrique");
+                    article.setSource(source);
+                    String lien = bloc.select("a.img-wrap").attr("href");
+                    //System.out.println(url2+lien);
+                    article.setUrlArticle(url2+lien);
+                    Elements liens = bloc.select("a.img-wrap").select("div.thumb");
+                    for(Element thumb : liens){
+                        String img = thumb.select("img").attr("src");
+                        article.setUrlImage(img);
+                        //System.out.println(img);
+                    }
+                    Elements details = bloc.select("div.media-block__content");
+                    for(Element detail : details){
+                        String dtime = detail.select("span.date").text();
+                        //System.out.println(dtime);
+                        article.setDatePublication(dtime);
+                        String titre = detail.select("a").select("h4.media-block__title").text();
+                        article.setTitre(titre);
+                        article.setCreated(LocalDateTime.now());
+                        liste.add(article);
+                        //System.out.println(titre);
+                    }
                 }
             }
         }catch (Exception e){
