@@ -100,7 +100,7 @@ public class ArticleService  {
     }
     public List<Article> findArticleByCategorieAfter(Long id, String categorie) {
         return findArticleByCategorie(categorie).stream()
-                .dropWhile(article -> article.getId().compareTo(id) != 1).toList();
+                .dropWhile(article -> article.getId().compareTo(id) != 1).collect(Collectors.toList());
     }
     public List<Article> findArticleBySourceName(String nom) {
         return articleRepo.getArticleBySourceName(nom);
