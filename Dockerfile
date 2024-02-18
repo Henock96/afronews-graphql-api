@@ -8,4 +8,4 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:17-jre-alpine
 COPY --from=builder target/*.jar afronews_graphql.jar
 EXPOSE 8080
-CMD ["java", "-jar", "afronews_graphql-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "afronews_graphql.jar"]
