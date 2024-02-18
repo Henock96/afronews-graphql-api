@@ -10,6 +10,7 @@ services:
     name: afronews-graphql-api-dockerfile
     plan: free
     repo: https://github.com/Henock96/afronews-graphql-api.git
+    runtime: docker
     region: Oregon (US West)
     healthCheckPath: /
     envVars:
