@@ -8,34 +8,12 @@ databases:
 services:
   - type: web
     name: afronews-graphql-api-dockerfile
-    runtime: docker
-    region: Oregon (US West)
     plan: free
+    repo: https://github.com/Henock96/afronews-graphql-api.git
+    region: Oregon (US West)
     healthCheckPath: /
     envVars:
-      - key: SPRING_DATASOURCE_CONNECTION_STRING
+      - key: DATABASE_URL
         fromDatabase:
           name: afronews_db
           property: connectionString
-      - key: SPRING_DATASOURCE_USERNAME
-        fromDatabase:
-          name: afronews_db
-          property: user
-      - key: SPRING_DATASOURCE_PASSWORD
-        fromDatabase:
-          name: afronews_db
-          property: password
-      - key: SPRING_DATASOURCE_HOST
-        fromDatabase:
-          name: afronews_db
-          property: host
-      - key: SPRING_DATASOURCE_PORT
-        fromDatabase:
-          name: afronews_db
-          property: port
-      - key: SPRING_DATASOURCE_SCHEMA
-        fromDatabase:
-          name: afronews_db
-          property: database
-      - key: SPRING_DATASOURCE_URL
-        value: jdbc:postgresql://${SPRING_DATASOURCE_HOST}:${SPRING_DATASOURCE_PORT}/${SPRING_DATASOURCE_SCHEMA}
