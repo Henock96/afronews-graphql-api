@@ -18,3 +18,11 @@ services:
         fromDatabase:
           name: afronews_db
           property: connectionString
+
+
+
+envVarGroups:
+  - name: url
+    envVars:
+      - key: DATABASE_URL
+        value: jdbc:postgresql://afronews_db_user:JcO9cXwnUXGvqwP8p1dTeTqIRyO8MMjz@dpg-cn930pv109ks739s669g-a:5432/afronews_db
