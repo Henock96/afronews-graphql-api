@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: afronews-db
+      POSTGRES_USER: afronews_db_user
+      POSTGRES_PASSWORD: JcO9cXwnUXGvqwP8p1dTeTqIRyO8MMjz
