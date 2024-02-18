@@ -1,9 +1,5 @@
 FROM maven:3.9.2-eclipse-temurin-17-alpine as builder
 
-ARG DATABASE_URL
-
-ENV DATABASE_URL=$DATABASE_URL \
-    DATABASE_DIRECT_URL=$DATABASE_URL
 
 COPY ./src src/
 COPY ./pom.xml pom.xml
