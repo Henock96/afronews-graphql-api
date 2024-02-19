@@ -17,7 +17,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import java.util.List;
 @EnableScheduling
 @Slf4j
-@SpringBootApplication(exclude ={DataSourceAutoConfiguration.class})
+@SpringBootApplication(scanBasePackages ={"com.dreesis.afronews_graphql", "com.dreesis.application"},exclude ={DataSourceAutoConfiguration.class})
 public class AfronewsGraphqlApplication implements CommandLineRunner{
 
     public static void main(String[] args) {
