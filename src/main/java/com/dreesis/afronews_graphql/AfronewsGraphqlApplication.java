@@ -17,7 +17,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import java.util.List;
 @EnableScheduling
 @Slf4j
-@SpringBootApplication
+@SpringBootApplication(exclude ={DataSourceAutoConfiguration.class})
 public class AfronewsGraphqlApplication implements CommandLineRunner{
 
     public static void main(String[] args) {
@@ -31,7 +31,7 @@ public class AfronewsGraphqlApplication implements CommandLineRunner{
     }
     @Override
     public void run(String... args) throws Exception {
-        /*List<Article> articleList = ExtractionSource.getJournalDeBrazza();
+        List<Article> articleList = ExtractionSource.getJournalDeBrazza();
         //List<Article> articles = ExtractionSource.getLinfodrome2();
         //List<Article> articlesG = ExtractionSource.getGabonReview();
         //List<Article> articles4 = ExtractionSource.getScidev();
@@ -39,12 +39,12 @@ public class AfronewsGraphqlApplication implements CommandLineRunner{
         //**List<Article> articles7 = ExtractionSource.getAfrimag();
         //List<Article> articles13 = ExtractionSource.getAps();
         //articles01.forEach(System.out::println);
-        //articleService.saveAllArticles(articles);
+        articleService.saveAllArticles(articleList);
         //articleService.saveAllArticles(articlesG);
         //articleService.saveAllArticles(articles2);
         //articleService.saveAllArticles(articles4);
         //articleService.saveAllArticles(articles13);
-        articleService.saveAllArticles(articles16);*/
+        //articleService.saveAllArticles(articles16);*/
 
 
         //articles.forEach(System.out::println);
