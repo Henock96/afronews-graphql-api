@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
-
+@Repository
 public interface ArticleRepository extends JpaRepository<Article, Long> {
     Article findByTitre(String titre);
     @Query("Select a from Article a left join Categorie c on a.categorie.id = c.id  where c.nom = :categorie order by a.created desc")
